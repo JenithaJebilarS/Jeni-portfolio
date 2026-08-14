@@ -164,6 +164,32 @@ async function handleFormSubmit(e) {
   }
 }
 
+// ── MOBILE NAV TOGGLE ──
+const navToggle = document.getElementById('nav-toggle');
+const navLinks = document.getElementById('nav-links');
+
+function closeNav() {
+  navToggle.classList.remove('open');
+  navLinks.classList.remove('open');
+  navToggle.setAttribute('aria-expanded', 'false');
+}
+
+if (navToggle && navLinks) {
+  navToggle.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    navToggle.classList.toggle('open', isOpen);
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  // Close menu when a nav link is tapped
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
+
+  // Close menu if window is resized back to desktop width
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 900) closeNav();
+  });
+}
+
 // Scroll-top
 const scrollBtn = document.getElementById('scroll-top');
 window.addEventListener('scroll', () => {
